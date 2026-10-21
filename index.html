@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yifan Cheng</title>
+  <meta name="description" content="Yifan Cheng: brand marketing and visual design. Management and Analytics student at NYU.">
+  <style>
+/* Yifan Cheng design system: tokens
+   Every color, font and spacing value lives here. Pages use these variables only. */
+
+@import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..900;1,62..125,300..900&display=swap");
+
+:root {
+  /* Color: base */
+  --color-paper: #F5F7F6;        /* page background, cool off-white */
+  --color-surface: #FFFFFF;      /* raised areas: badges, panels */
+  --color-ink: #17233B;          /* primary text, deep navy */
+  --color-ink-soft: #4F5A6E;     /* secondary text, meta lines */
+  --color-line: #D6DCE2;         /* rules and borders */
+  --color-signal: #0B7A55;       /* links, focus, the one interactive color (wayfinding green) */
+  --color-signal-strong: #075E41;/* link hover/active */
+
+  /* Color: work categories (like guest badges coded by role) */
+  --color-strategy: #2C55B8;     /* research and strategy */
+  --color-content: #A3326F;      /* content and social */
+  --color-events: #0B7A55;       /* events and operations */
+  --color-design: #C98A0E;       /* visual and brand design */
+  --color-strategy-tint: #E6ECF8;
+  --color-content-tint: #F6E6EF;
+  --color-events-tint: #E2F2EB;
+  --color-design-tint: #FAF0D9;
+
+  /* Type: one family, two widths */
+  --font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-width-display: 125%;    /* expanded, for tier 1 and 2 */
+  --font-width-text: 100%;       /* normal, for reading */
+
+  /* Type scale: named after wayfinding legibility tiers */
+  --type-tier1: clamp(3.25rem, 11vw, 8rem);     /* visible at 30 m: the name, page titles */
+  --type-tier2: clamp(1.75rem, 3.6vw, 2.25rem); /* readable in 3 s: section headings */
+  --type-tier3: 1.3125rem;      /* 21px: entry titles, lead paragraphs */
+  --type-body: 1.0625rem;       /* 17px: body text */
+  --type-detail: 0.875rem;      /* 14px: meta lines, tags, captions */
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+  --weight-black: 850;
+
+  --leading-tight: 0.92;        /* tier 1 only */
+  --leading-heading: 1.15;
+  --leading-body: 1.55;
+
+  --tracking-display: -0.03em;
+  --tracking-normal: 0;
+
+  --measure: 64ch;              /* max line length for reading text */
+
+  /* Space: 4px base */
+  --space-1: 0.25rem;  /* 4 */
+  --space-2: 0.5rem;   /* 8 */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 */
+  --space-5: 1.5rem;   /* 24 */
+  --space-6: 2rem;     /* 32 */
+  --space-7: 3rem;     /* 48 */
+  --space-8: 4rem;     /* 64 */
+  --space-9: 6rem;     /* 96 */
+  --space-10: 8rem;    /* 128 */
+
+  /* Layout */
+  --page-max: 72rem;            /* 1152px */
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --rail: 15rem;                /* left column for section headings */
+
+  /* Shape and strokes */
+  --stroke-1: 1px;   /* hairlines, link underline */
+  --stroke-2: 2px;   /* hover underline, current page underline */
+  --stroke-3: 3px;   /* hero rule, focus ring and offset */
+  --stroke-4: 4px;   /* category bar on a tag */
+  --radius-tag: 2px;
+  --underline-offset: 0.18em;
+  --underline-offset-nav: 0.35em;
+  --rule: var(--stroke-1) solid var(--color-line);
+  --rule-strong: var(--stroke-3) solid var(--color-ink);
+  --focus-ring: var(--stroke-3) solid var(--color-signal);
+}
+
+</style>
+  <style>
+/* Yifan Cheng design system: components
+   Uses tokens.css variables only. No raw colors, fonts or spacing values here. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-family);
+  font-stretch: var(--font-width-text);
+  font-size: var(--type-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+}
+
+a { color: var(--color-signal); text-underline-offset: var(--underline-offset); text-decoration-thickness: var(--stroke-1); }
+a:hover { color: var(--color-signal-strong); text-decoration-thickness: var(--stroke-2); }
+:focus-visible { outline: var(--focus-ring); outline-offset: var(--stroke-3); }
+
+.skip-link { position: absolute; left: var(--space-4); top: calc(-1 * var(--space-9)); }
+.skip-link:focus { top: var(--space-4); background: var(--color-surface); padding: var(--space-2) var(--space-3); }
+
+/* Page frame */
+.page { max-width: var(--page-max); margin: 0 auto; padding: 0 var(--gutter); }
+
+/* Site nav */
+.site-nav {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
+  gap: var(--space-4); padding: var(--space-5) 0; border-bottom: var(--rule);
+  font-size: var(--type-detail);
+}
+.site-nav__name { font-weight: var(--weight-bold); font-stretch: var(--font-width-display); color: var(--color-ink); text-decoration: none; }
+.site-nav ul { display: flex; gap: var(--space-5); margin: 0; padding: 0; list-style: none; }
+.site-nav a { color: var(--color-ink); text-decoration: none; }
+.site-nav a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: var(--stroke-2); text-underline-offset: var(--underline-offset-nav); }
+.site-nav a:hover { color: var(--color-signal); }
+
+/* Tier 1: the hero, visible at 30 m */
+.hero { padding: var(--space-9) 0 var(--space-8); border-bottom: var(--rule-strong); }
+.hero__title {
+  margin: 0;
+  font-size: var(--type-tier1); font-weight: var(--weight-black); font-stretch: var(--font-width-display);
+  line-height: var(--leading-tight); letter-spacing: var(--tracking-display);
+}
+.hero__lead {
+  max-width: var(--measure); margin: var(--space-6) 0 0;
+  font-size: var(--type-tier3); line-height: var(--leading-heading);
+}
+.hero__lead + .hero__lead { margin-top: var(--space-4); font-size: var(--type-body); line-height: var(--leading-body); color: var(--color-ink-soft); }
+.contact { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); margin: var(--space-6) 0 0; padding: 0; list-style: none; }
+.contact a { font-weight: var(--weight-medium); }
+
+/* Sections: heading in the left rail, content on the right */
+.section {
+  display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); gap: var(--space-6);
+  padding: var(--space-8) 0; border-bottom: var(--rule);
+}
+.section:last-of-type { border-bottom: 0; }
+.section__title {
+  margin: 0; font-size: var(--type-tier2); font-weight: var(--weight-bold); font-stretch: var(--font-width-display);
+  line-height: var(--leading-heading); letter-spacing: var(--tracking-display);
+}
+.section__note { margin: var(--space-3) 0 0; font-size: var(--type-detail); color: var(--color-ink-soft); max-width: 22ch; }
+.section__body > * + * { margin-top: var(--space-7); }
+
+@media (max-width: 52rem) {
+  .section { grid-template-columns: 1fr; gap: var(--space-5); padding: var(--space-7) 0; }
+  .section__note { max-width: var(--measure); }
+}
+
+/* Entries: one job, project or degree */
+.entry { max-width: var(--measure); }
+.entry__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-1) var(--space-4); }
+.entry__title { margin: 0; font-size: var(--type-tier3); font-weight: var(--weight-bold); line-height: var(--leading-heading); }
+.entry__meta { margin: var(--space-1) 0 0; font-size: var(--type-detail); color: var(--color-ink-soft); }
+.entry__summary { margin: var(--space-3) 0 0; }
+.entry__points { margin: var(--space-3) 0 0; padding-left: var(--space-5); }
+.entry__points li + li { margin-top: var(--space-2); }
+.entry__points li::marker { color: var(--color-ink-soft); }
+.entry__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-3) 0 0; padding: 0; list-style: none; }
+
+/* Category tag: a colored badge, coded like guest passes */
+.tag {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-1) var(--space-2); border-radius: var(--radius-tag);
+  font-size: var(--type-detail); font-weight: var(--weight-medium); line-height: var(--leading-heading);
+  color: var(--color-ink); background: var(--tag-tint); border-left: var(--stroke-4) solid var(--tag-color);
+}
+.tag--strategy { --tag-color: var(--color-strategy); --tag-tint: var(--color-strategy-tint); }
+.tag--content  { --tag-color: var(--color-content);  --tag-tint: var(--color-content-tint); }
+.tag--events   { --tag-color: var(--color-events);   --tag-tint: var(--color-events-tint); }
+.tag--design   { --tag-color: var(--color-design);   --tag-tint: var(--color-design-tint); }
+
+/* Key: explains what the tag colors mean */
+.key { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-5) 0 0; padding: 0; list-style: none; }
+
+/* Fact list: short label and value pairs */
+.facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: var(--space-3) var(--space-5); margin: 0; max-width: var(--measure); }
+.facts dt { font-weight: var(--weight-bold); }
+.facts dd { margin: 0; }
+@media (max-width: 36rem) { .facts { grid-template-columns: 1fr; gap: var(--space-1); } .facts dd + dt { margin-top: var(--space-3); } }
+
+/* Status: where a project stands */
+.status { display: inline-block; font-size: var(--type-detail); font-weight: var(--weight-bold); }
+.status--active { color: var(--color-signal); }
+.status--done { color: var(--color-ink-soft); }
+
+/* Footer */
+.site-footer { padding: var(--space-6) 0 var(--space-8); border-top: var(--rule); font-size: var(--type-detail); color: var(--color-ink-soft); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page">
+    <nav class="site-nav" aria-label="Site">
+      <a class="site-nav__name" href="index.html">Yifan Cheng</a>
+      <ul>
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="projects.html">Current projects</a></li>
+      </ul>
+    </nav>
+
+    <main id="main">
+      <header class="hero">
+        <h1 class="hero__title">Yifan<br>Cheng</h1>
+        <p class="hero__lead">Brand marketing and planning, backed by a visual communication design degree. I can take a brand from consumer research to finished VI and retail materials.</p>
+        <p class="hero__lead">I’m studying for a Master of Science in Management and Analytics (business analytics track) at New York University. I’m looking for roles in brand marketing, marketing planning and product marketing.</p>
+        <ul class="contact">
+          <li><a href="mailto:cheng020413@163.com">cheng020413@163.com</a></li>
+          <li><a href="https://www.notion.so/Yifan-Cheng-Marketing-Designing-Portfolio-2fb91a21273480d2bde9dd485c3ee41d">Portfolio on Notion</a></li>
+        </ul>
+      </header>
+
+      <section class="section" aria-labelledby="experience">
+        <div>
+          <h2 class="section__title" id="experience">Experience</h2>
+          <p class="section__note">Each piece of work is tagged by the kind of work it was.</p>
+          <ul class="key" aria-label="Work categories">
+            <li class="tag tag--strategy">Strategy and research</li>
+            <li class="tag tag--content">Content</li>
+            <li class="tag tag--events">Events</li>
+            <li class="tag tag--design">Design</li>
+          </ul>
+        </div>
+        <div class="section__body">
+          <article class="entry">
+            <div class="entry__head"><h3 class="entry__title">L’Oréal China</h3></div>
+            <p class="entry__meta">Marketing intern, Shanghai, June to August 2026</p>
+            <p class="entry__summary">Pre-launch work for La Roche-Posay’s B5 series: competitor benchmarking, social content testing and in-store research to inform positioning and messaging.</p>
+            <ul class="entry__points">
+              <li>Benchmarked the Tmall flagship stores of 9 brands, including Winona, Comfy, Avène and CeraVe, tracking pricing, selling points and review keywords for 30+ SKUs. The team kept the analysis structure, which added per-ml and per-sheet unit pricing for the first time. Wrote 3 research reports.</li>
+              <li>A/B tested 38 pieces of content for the new B5 mask across Xiaohongshu, Douyin, Weibo and WeChat; 14 were used directly. From 200+ survey responses, found 3 high-converting messages and moved the core claim from “repairs redness” to “emergency redness repair”, adopted for the product page headline, post title templates and livestream scripts.</li>
+              <li>Researched shoppers in skincare areas at Sephora, HARMAY and other Shanghai locations: 100+ in-depth interviews and 12 research memos.</li>
+            </ul>
+            <ul class="entry__tags" aria-label="Categories">
+              <li class="tag tag--strategy">Strategy and research</li>
+              <li class="tag tag--content">Content</li>
+            </ul>
+          </article>
+
+          <article class="entry">
+            <div class="entry__head"><h3 class="entry__title">NetEase Youdao Ads</h3></div>
+            <p class="entry__meta">Overseas brand PR intern, Guangzhou, May to August 2025</p>
+            <p class="entry__summary">Industry insight for brands going global, joint marketing events with Google and Yandex Ads, and B2B lead generation.</p>
+            <ul class="entry__points">
+              <li>Wrote 10+ weekly event reports on Google and TikTok Shop clients going global, and supported planning for 2 events, including Google Brand Summit 2025.</li>
+              <li>Ran the “Youdao Ads” accounts on six platforms (WeChat, WeChat Channels, LinkedIn, X, Facebook, Instagram): 20+ posts in 3 months, 12,000+ reads on the best post, 30+ qualified B2B leads.</li>
+              <li>Led design of 5 kinds of materials for the Youdao Ads × Google Shenzhen summit, including 4 roll-up banners, 120 guest badges color-coded by role and 120 programs. Checked in 150 guests, hosted 6 media outlets and followed up 50+ leads, 3 of which moved to the next round.</li>
+            </ul>
+            <ul class="entry__tags" aria-label="Categories">
+              <li class="tag tag--content">Content</li>
+              <li class="tag tag--events">Events</li>
+              <li class="tag tag--design">Design</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="projects">
+        <div>
+          <h2 class="section__title" id="projects">Projects</h2>
+        </div>
+        <div class="section__body">
+          <article class="entry">
+            <div class="entry__head"><h3 class="entry__title">Glossier new-user growth plan</h3></div>
+            <p class="entry__meta">Solo project</p>
+            <p class="entry__summary">Researched 20+ international beauty brands from scratch, including Drunk Elephant, Fenty Beauty, Saie, Rare Beauty and Charlotte Tilbury. Sized TAM, SAM and SOM, built personas for two segments (sensitive skin, oily and acne-prone skin) and set out how to reach new users. Ranked first in the program.</p>
+            <ul class="entry__tags" aria-label="Categories"><li class="tag tag--strategy">Strategy and research</li></ul>
+          </article>
+
+          <article class="entry">
+            <div class="entry__head"><h3 class="entry__title">NYU Business Summit 2026</h3></div>
+            <p class="entry__meta">Student committee lead</p>
+            <p class="entry__summary">Coordinated 20+ North American university delegates and 50+ C-level guests from companies including Visa, JPMorgan, JD.com and BCG, across 3 keynotes and 6 networking sessions. A shared tracker and rehearsed guest flow kept 200+ guests moving through 5 segments without a break.</p>
+            <ul class="entry__tags" aria-label="Categories"><li class="tag tag--events">Events</li></ul>
+          </article>
+
+          <article class="entry">
+            <div class="entry__head"><h3 class="entry__title">Store branding for a local commercial property</h3></div>
+            <p class="entry__meta">Wuhan University of Technology project, lead and presenter</p>
+            <p class="entry__summary">Led a team of 3 on VI, wayfinding and store visuals for a milk tea shop and a tea house on the Yangtze. The shared idea: one source, two expressions, with milk tea taking the motion of water and tea taking its stillness. Wayfinding worked in three tiers: visible at 30 m, readable in 3 seconds, graphic. After the presentation the property client asked on the spot when construction drawings would be ready. Ranked first in the program.</p>
+            <ul class="entry__tags" aria-label="Categories"><li class="tag tag--design">Design</li></ul>
+          </article>
+
+          <article class="entry">
+            <div class="entry__head"><h3 class="entry__title">MediaPost OMMA Awards 2025</h3></div>
+            <p class="entry__meta">On-site operations</p>
+            <p class="entry__summary">Guided and received guests from 100+ partner companies, including AT&amp;T, Sephora and Liquid IV, during the awards ceremony, and reviewed the creative direction of the year’s winning work.</p>
+            <ul class="entry__tags" aria-label="Categories"><li class="tag tag--events">Events</li></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="education">
+        <div><h2 class="section__title" id="education">Education</h2></div>
+        <div class="section__body">
+          <article class="entry">
+            <div class="entry__head"><h3 class="entry__title">New York University</h3></div>
+            <p class="entry__meta">August 2025 to May 2027</p>
+            <p class="entry__summary">Master of Science in Management and Analytics, business analytics track. GPA 3.75/4.0. Eight core courses, including Business Analytics Foundations and Data-Driven Decision Making.</p>
+          </article>
+          <article class="entry">
+            <div class="entry__head"><h3 class="entry__title">Wuhan University of Technology</h3></div>
+            <p class="entry__meta">September 2020 to June 2024</p>
+            <p class="entry__summary">Bachelor of Arts in Visual Communication Design, Sino-foreign joint program. GPA 3.73/4.0, top 8% of the year. University first-class scholarship two years running. Outstanding graduate.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="skills">
+        <div><h2 class="section__title" id="skills">Skills and awards</h2></div>
+        <div class="section__body">
+          <dl class="facts">
+            <dt>Design</dt>
+            <dd>Brand VI extensions, visual guideline manuals, pop-up and retail display materials. Illustrator, Photoshop, InDesign and After Effects; 30+ short brand videos.</dd>
+            <dt>Data</dt>
+            <dd>Excel (VLOOKUP, XLOOKUP, pivot tables) and basic SQL queries.</dd>
+            <dt>Languages</dt>
+            <dd>Chinese (native), English (TOEFL 101, NYU taught fully in English).</dd>
+            <dt>Awards</dt>
+            <dd>Times Golden Calf Award, Award of Excellence, advertising creative track (November 2023). National Cheerleading League, 4th place, university group B (June 2024). Outstanding Graduation Work Exhibition (2024).</dd>
+            <dt>Interests</dt>
+            <dd>Yoga, tennis, reading.</dd>
+          </dl>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      Yifan Cheng, <a href="mailto:cheng020413@163.com">cheng020413@163.com</a>
+    </footer>
+  </div>
+</body>
+</html>
